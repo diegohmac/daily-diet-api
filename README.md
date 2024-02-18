@@ -1,11 +1,23 @@
 # Functional Requirements
-- [x] The user should be able to create a new transaction.
-- [x] The user should be able to see his balance.
-- [x] The user should be able to see all transactions history.
-- [x] The user should be able to see a single transaction.
+- [ ] It should be possible to create a user.
+- [ ] It should be possible to register a meal with specific information.
+    - [ ] The meal must have the following payload:
+        ```
+        {
+            name: string;
+            description: string;
+            time: timestamp;
+            offDiet: boolean;
+        }
+        ```
+- [ ] It should be possible to edit a meal, altering all related data.
+- [ ] It should be possible to delete a meal.
+- [ ] It should be possible to list all meals of a user.
+- [ ] It should be possible to view a single meal.
+- [ ] It should be possible to retrieve a user's metrics.
+
 
 # Nonfunctional Requirements
 
-- [x] A transaction can be of type income or outcome.
-- [x] It should be able to identify users between requests.
-- [x] The user can only see the transactions he created.
+- [ ] It should be possible to identify the user between requests.
+- [ ] The user can only view, edit, and delete meals they created.
