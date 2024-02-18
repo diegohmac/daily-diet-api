@@ -1,5 +1,8 @@
 # Functional Requirements
-- [ ] It should be possible to create a user.
+- [x] It should be possible to create a user.
+- [x] It should be able to list all users.
+- [x] It should be able to get user by ID.
+- [x] It should be able to login passing user ID.
 - [ ] It should be possible to register a meal with specific information.
     - [ ] The meal must have the following payload:
         ```
@@ -8,6 +11,7 @@
             description: string;
             time: timestamp;
             offDiet: boolean;
+            userId: string;
         }
         ```
 - [ ] It should be possible to edit a meal, altering all related data.

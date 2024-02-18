@@ -1,11 +1,11 @@
 import fastify from 'fastify';
 import cookie from '@fastify/cookie';
 
-// import { exampleRoutes } from './routes/example';
+import { usersRoutes } from './routes/users';
 
 export const app = fastify();
 
 app.register(cookie);
-// app.register(exampleRoutes, {
-//   prefix: '/example',
-// });
+app.register(usersRoutes, {
+  prefix: '/users',
+});
