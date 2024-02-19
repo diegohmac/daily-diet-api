@@ -32,12 +32,16 @@ export async function usersRoutes(app: FastifyInstance) {
 
     const { name } = bodySchema.parse(request.body);
 
-    await knex('users').insert({
-      id: randomUUID(),
-      name,
-    });
+    const [user] = await knex('users')
+      .insert({
+        id: randomUUID(),
+        name,
+      })
+      .returning('id');
 
-    return reply.status(201).send();
+    return reply.status(201).send({
+      user,
+    });
   });
   app.post('/login', async (request, reply) => {
     const bodySchema = z.object({
