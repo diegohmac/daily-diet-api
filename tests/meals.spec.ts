@@ -58,7 +58,45 @@ describe('meals routes', () => {
     );
   });
   it('should be possible to edit a meal.', async () => {
-    expect(true).toBe(true);
+    const cookie = await loginUser();
+
+    const bodyPayload = {
+      name: 'Dinner',
+      description: 'Chicken and Salad',
+      time: new Date().toISOString(),
+      offDiet: false,
+    };
+
+    const createMealResponse = await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookie)
+      .send(bodyPayload);
+
+    const bodyPayloadUpdate = {
+      name: 'Lunch',
+      description: 'Rice and Beans',
+      time: new Date().toISOString(),
+      offDiet: true,
+    };
+
+    const updateMealResponse = await request(app.server)
+      .put(`/meals/${createMealResponse.body.id}`)
+      .set('Cookie', cookie)
+      .send(bodyPayloadUpdate);
+
+    expect(updateMealResponse.body).toEqual(
+      expect.objectContaining({
+        ...bodyPayloadUpdate,
+        offDiet: bodyPayloadUpdate.offDiet ? 1 : 0,
+      })
+    );
+
+    expect(updateMealResponse.body).not.toEqual(
+      expect.objectContaining({
+        ...createMealResponse.body,
+        offDiet: createMealResponse.body.offDiet ? 1 : 0,
+      })
+    );
   });
   it('should be possible to delete a meal.', async () => {
     expect(true).toBe(true);

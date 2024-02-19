@@ -146,9 +146,12 @@ export async function mealsRoutes(app: FastifyInstance) {
       offDiet: offDiet === undefined ? meal.offDiet : offDiet,
     };
 
-    await knex('meals').where({ id, userId }).update(updatedMeal);
+    const updatedMealResponse = await knex('meals')
+      .where({ id, userId })
+      .update(updatedMeal)
+      .returning('*');
 
-    return updatedMeal;
+    return reply.status(200).send(updatedMealResponse[0]);
   });
   app.post(
     '/',
