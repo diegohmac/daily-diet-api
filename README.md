@@ -14,7 +14,7 @@
             userId: string;
         }
         ```
-- [ ] It should be possible to edit a meal, altering all related data.
+- [x] It should be possible to edit a meal, altering all related data.
 - [ ] It should be possible to delete a meal.
 - [x] It should be possible to list all meals of a user.
 - [x] It should be possible to view a single meal.
