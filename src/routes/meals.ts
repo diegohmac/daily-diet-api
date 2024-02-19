@@ -79,9 +79,7 @@ export async function mealsRoutes(app: FastifyInstance) {
       return reply.status(404).send();
     }
 
-    return {
-      meal,
-    };
+    return meal;
   });
   app.delete('/:id', async (request, reply) => {
     const paramSchema = z.object({
