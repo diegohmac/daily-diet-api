@@ -18,7 +18,11 @@
 - [x] It should be possible to delete a meal.
 - [x] It should be possible to list all meals of a user.
 - [x] It should be possible to view a single meal.
-- [ ] It should be possible to retrieve a user's metrics.
+- [x] It should be possible to retrieve a user's metrics.
+    - [x] Total number of registered meals
+    - [x] Total number of meals within the diet
+    - [x] Total number of meals outside the diet
+    - [x] Best sequence of meals within the diet
 
 
 # Nonfunctional Requirements
