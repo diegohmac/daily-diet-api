@@ -15,7 +15,7 @@
         }
         ```
 - [x] It should be possible to edit a meal, altering all related data.
-- [ ] It should be possible to delete a meal.
+- [x] It should be possible to delete a meal.
 - [x] It should be possible to list all meals of a user.
 - [x] It should be possible to view a single meal.
 - [ ] It should be possible to retrieve a user's metrics.
@@ -24,4 +24,4 @@
 # Nonfunctional Requirements
 
 - [x] It should be possible to identify the user between requests.
-- [ ] The user can only view, edit, and delete meals they created.
+- [x] The user can only view, edit, and delete meals they created.

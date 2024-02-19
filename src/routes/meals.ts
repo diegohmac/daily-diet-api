@@ -46,7 +46,32 @@ export async function mealsRoutes(app: FastifyInstance) {
       meal,
     };
   });
-  app.post('/:id', async (request, reply) => {
+  app.delete('/:id', async (request, reply) => {
+    const paramSchema = z.object({
+      id: z.string(),
+    });
+
+    const { id } = paramSchema.parse(request.params);
+
+    const sessionCookie = request.cookies.sessionCookie;
+
+    if (!sessionCookie) {
+      return reply.status(401).send();
+    }
+
+    const { userId } = JSON.parse(sessionCookie);
+
+    const meal = await knex('meals').where({ id, userId }).first();
+
+    if (!meal) {
+      return reply.status(404).send();
+    }
+
+    await knex('meals').where({ id, userId }).delete();
+
+    return reply.status(204).send();
+  });
+  app.put('/:id', async (request, reply) => {
     const paramSchema = z.object({
       id: z.string(),
     });
