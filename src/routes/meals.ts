@@ -175,17 +175,19 @@ export async function mealsRoutes(app: FastifyInstance) {
 
       const { userId } = JSON.parse(sessionCookie);
 
-      await knex('meals').insert({
-        id: randomUUID(),
-        name,
-        description,
-        time: time ?? new Date().toISOString(),
-        created_at: new Date().toISOString(),
-        offDiet,
-        userId,
-      });
+      const meal = await knex('meals')
+        .insert({
+          id: randomUUID(),
+          name,
+          description,
+          time: time ?? new Date().toISOString(),
+          created_at: new Date().toISOString(),
+          offDiet,
+          userId,
+        })
+        .returning('*');
 
-      return reply.status(201).send();
+      return reply.status(201).send(meal[0]);
     }
   );
 }
