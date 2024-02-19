@@ -148,7 +148,7 @@ describe('meals routes', () => {
       ])
     );
   });
-  it.only('should be possible to view a single meal passing ID', async () => {
+  it('should be possible to view a single meal passing ID', async () => {
     const cookie = await loginUser();
 
     const bodyPayload = {
@@ -175,6 +175,75 @@ describe('meals routes', () => {
     );
   });
   it('should be possible to retrieve all metrics from a user.', async () => {
-    expect(true).toBe(true);
+    const cookie = await loginUser();
+
+    const onDietBodyPayload1 = {
+      name: 'Dinner',
+      description: 'Chicken and Salad',
+      time: new Date().toISOString(),
+      offDiet: false,
+    };
+
+    const onDietBodyPayload2 = {
+      name: 'Dinner',
+      description: 'Fish and Salad',
+      time: new Date().toISOString(),
+      offDiet: false,
+    };
+
+    const onDietBodyPayload3 = {
+      name: 'Dinner',
+      description: 'Pasta and Salad',
+      time: new Date().toISOString(),
+      offDiet: false,
+    };
+
+    const offDietBodyPayload1 = {
+      name: 'Dinner',
+      description: 'Pizza',
+      time: new Date().toISOString(),
+      offDiet: true,
+    };
+
+    const offDietBodyPayload2 = {
+      name: 'Dinner',
+      description: 'Hamburger',
+      time: new Date().toISOString(),
+      offDiet: true,
+    };
+
+    Promise.all([
+      request(app.server)
+        .post('/meals')
+        .set('Cookie', cookie)
+        .send(onDietBodyPayload1),
+      request(app.server)
+        .post('/meals')
+        .set('Cookie', cookie)
+        .send(offDietBodyPayload1),
+      request(app.server)
+        .post('/meals')
+        .set('Cookie', cookie)
+        .send(onDietBodyPayload2),
+      request(app.server)
+        .post('/meals')
+        .set('Cookie', cookie)
+        .send(onDietBodyPayload3),
+      request(app.server)
+        .post('/meals')
+        .set('Cookie', cookie)
+        .send(offDietBodyPayload2),
+    ]);
+
+    const metricsResponse = await request(app.server)
+      .get('/meals/metrics')
+      .set('Cookie', cookie);
+
+    expect(metricsResponse.body.metrics).toEqual({
+      bestSequence: 2,
+      offDietMeals: 2,
+      onDietMeals: 3,
+      totalMeals: 5,
+    });
   });
 });
