@@ -6,6 +6,43 @@ import { knex } from '../database';
 import { checkUserIsAuthenticated } from '../middlewares/check-user-is-authenticated';
 
 export async function mealsRoutes(app: FastifyInstance) {
+  app.get('/metrics', async (request, reply) => {
+    const sessionCookie = request.cookies.sessionCookie;
+
+    if (!sessionCookie) {
+      return reply.status(401).send();
+    }
+
+    const { userId } = JSON.parse(sessionCookie);
+
+    const meals = await knex('meals').where({ userId }).orderBy('time');
+
+    const metrics = {
+      totalMeals: meals.length,
+      onDietMeals: meals.filter((meal) => !meal.offDiet).length,
+      offDietMeals: meals.filter((meal) => meal.offDiet).length,
+      bestSequence: meals.reduce(
+        (acc, cur) => {
+          if (cur.offDiet) {
+            return {
+              best: acc.best > acc.current ? acc.best : acc.current,
+              current: 0,
+            };
+          }
+
+          return {
+            best: acc.best,
+            current: acc.current + 1,
+          };
+        },
+        { best: 0, current: 0 }
+      ).best,
+    };
+
+    return {
+      metrics,
+    };
+  });
   app.get('/', async (request, reply) => {
     const sessionCookie = request.cookies.sessionCookie;
 
