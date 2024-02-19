@@ -23,5 +23,5 @@
 
 # Nonfunctional Requirements
 
-- [ ] It should be possible to identify the user between requests.
+- [x] It should be possible to identify the user between requests.
 - [ ] The user can only view, edit, and delete meals they created.
